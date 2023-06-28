@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>FTG FITNESS</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+  </style>
+<!--link relevant style & fonts-->
+
+</head>
+<body>
+  <div class="pimg1">
+    <div class="maintitle">
+      <span class="border">
+        FTG FITNESS
+      </span>
+
+    </div>
+    <p class="introtext">FTG Fitness is a fitness calculation site for anything fitness related.</p>
+    <p class="introtexttwo">Select an option to continue.</p>
+
+    <a href="#bmihead" class="topbutton button1">BMI CALC</a>
+    <a href="#whrhead" class="topbutton button2">WHR CALC</a>
+    <a href="#bmrhead" class="topbutton button3">BMR CALC</a>
+    <a href="#strengthhead" class="topbutton button4">STRENGTH CALC</a>
+    <a href="#pacehead" class="topbutton button5">PACE CALC</a>
+    <a href="#energyhead" class="topbutton button6">ENERGY CONV</a>
+    <!--Buttons to jump to each calculation without scrolling-->
+
+    <p class="introtextthree">Or scroll down to explore...</p>
+  </div>
+
+
+  <section class="section section-one">
+    <div id="bmihead"></div>
+    <h2 class="calcheader">BMI CALCULATION</h2>
+
+    <form id="bmiform">
+      Mass (kg): <input type="text" name="bmimass"><br>
+      Height (cm): <input type="text" name="bmiheight"><br>
+      <input type="submit" value="Submit">
+    </form>
+      <!--Input form to obtain user data-->
+
+      <p class="result" id="bmioutput">BMI RESULT: <span></span></p>
+      <!--output to this span-->
+    <script>
+    // bmi function
+    const bmi = function() {
+    const bmiForm = document.querySelector('#bmiform');
+    const bmiResult = document.querySelector("#bmioutput")
+    //assign const to form & output
+
+    console.log(bmiForm);
+
+        bmiForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            //prevent default refresh form behaviour
+
+            let massKG = bmiForm.querySelector('input[name="bmimass"]').value;
+            let heightCM = bmiForm.querySelector('input[name="bmiheight"]').value;
+            //reading from form
+
+            let heightM =  heightCM / 100;
+            //m -> cm
+
+            let calculateBMI = (massKG / (heightM * heightM))
+            //bmi calculation
+
+            console.log(calculateBMI)
+
+            let finalBMI = calculateBMI.toFixed(2)
+            //rounding to 2dp
+
+            let bmiText = '';
+
+            if (calculateBMI < 18.5) {
+                bmiResult.querySelector("span").style.color = "orange";
+                bmiText = "Underweight";
+            } else if (calculateBMI <= 18.5 || calculateBMI < 24.9) {
+                bmiResult.querySelector("span").style.color = "green";
+                bmiText = "healthy weight range";
+            } else if (calculateBMI <=25 || calculateBMI  <29.9) {
+                bmiResult.querySelector("span").style.color = "red";
+                bmiText = "overweight";
+            }  else if (calculateBMI >30) {
+                bmiResult.querySelector("span").style.color = "purple";
+                bmiText = "obese weight range";
+            } else {
+                bmiResult.querySelector("span").style.color = "blue";
+                bmiText = "error validation unsuccessful";
+            }
+            //if statement to determine weight range
+
+            bmiResult.querySelector("span").innerHTML = `${bmiText}` + " - " + `${finalBMI}`;
+            //output to span with bmi text and bmi value
+          });
+        }
+
+        bmi();
+    </script>
+    <!--js script for maths to work out bmi value end-->
+
+
+  </section>
+
+  <div class="pimg2">
+  </div>
+
+  <section class="section section-two">
+    <div id="whrhead"></div>
+    <h2 class="calcheader">WHR CALCULATION</h2>
+
+    <form id="whrform">
+    Waist Circumference (cm): <input type="text" name="whrwaist"><br>
+    Hip Circumference (cm): <input type="text" name="whrhip"><br>
+    Gender (M/F): <input type="text" name="whrgender"><br>
+    <input type="submit" value="Submit">
+    </form>
+    <!--form for input data-->
+
+    <p class="result" id="whroutput">WHR RESULT: <span></span></p>
+    <!--result to be within the span, linked via id whroutput
+  -->
+    <script>
+    const whr = function() {
+    const whrForm = document.querySelector('#whrform');
+    const whrResult = document.querySelector("#whrouput")
+    //assigning constants to form & output
+
+        whrForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            //prevent default form refresh behaviour
+
+            let WaistCM = whrForm.querySelector('input[name="whrwaist"]').value;
+            let HipCM = whrForm.querySelector('input[name="whrhip"]').value;
+            let Gender = whrForm.querySelector('input[name="gender"]');
+            //reading from form inputs
+
+            let calculateWHR = (WaistCM / HipCM)
+            //calculate WHR
+
+            console.log(calculateWHR)
+
+
+            let whrtext = '';
+
+            if ((calculateWHR < 0.95) && (Gender = 'M')) {
+              whrtext = 'Low Health Risk'
+            } else if ((calculateWHR < 0.85) && (Gender = 'F')) {
+              whrtext = 'Low Health Risk'
+            } else if ((calculateWHR > 0.95) && (Gender = 'M')) {
+              whrtext = 'Moderate Health Risk'
+            } else if ((calculateWHR > 0.85) && (Gender = 'F')) {
+              whrtext = 'Moderate Health Risk'
+            } else if ((calculateWHR > 1) && (Gender = 'M')) {
+              whrtext = 'High Health Risk'
+            } else if ((calculateWHR > 0.86) && (Gender = 'F')) {
+              whrtext = 'High Health Risk'
+            } else {
+              whrtext = 'Validation unsuccessful'
+            }
+            //if statement to calculate risk
+
+            whroutput.querySelector("span").innerHTML = `${calculateWHR}` + " - " + `${whrtext}`;
+            //output WHR value & health risk
+          });
+        }
+
+        whr();
+    </script>
+    <!--whr calculation end-->
+
+
+  </section>
+
+  <div class="pimg3">
+  </div>
+
+  <section class="section section-three">
+    <div id="bmrhead"></div>
+    <h2 class="calcheader">BMR CALCULATION</h2>
+
+    <form id="bmrform">
+    Weight (kg):<input type="text" name="bmrweight"><br>
+    Height (cm): <input type="text" name="bmrheight"><br>
+    Age (years): <input type="text" name="bmrage"><br>
+    <input type="submit" value="Submit">
+    </form>
+    <!--form input-->
+
+    <p class="result" id="bmroutput">BMR RESULT: <span></span></p>
+    <!--output to span-->
+
+    <script>
+    const bmr = function() {
+    const bmrForm = document.querySelector('#bmrform');
+    const bmrResult = document.querySelector("#bmroutput")
+    //assign const for form & output
+
+        bmrform.addEventListener("submit", (e) => {
+            e.preventDefault();
+            //prevent default form refresh behaviour
+
+            let WeightKG = bmrForm.querySelector('input[name="bmrweight"]').value;
+            let HeightCM = bmrForm.querySelector('input[name="bmrheight"]').value;
+            let Age = bmrForm.querySelector('input[name="bmrage"]').value;
+            //reading from form inputs
+
+            let bmrtext = '';
+            let calculateBMRMale = (88.362 + (13.397 * WeightKG) + (4.799 * HeightCM) - (5.677 * Age));
+            let calculateBMRFemale = (447.593 + (9.247 * WeightKG) + (3.098 * HeightCM) - (4.330 * Age));
+            //bmr calculation m & f
+
+            let finalBMRM = calculateBMRMale.toFixed(2)
+            let finalBMRF = calculateBMRFemale.toFixed(2)
+            //bmr rounded to 2dp
+
+            bmroutput.querySelector("span").innerHTML = "Male:" + `${finalBMRM}` + " - " + "Female:" + `${finalBMRF}`;
+            //output to span
+          });
+        }
+
+        bmr();
+    </script>
+    <!--bmr calculation, result varies on gender so two answers, end -->
+
+  </section>
+
+  <div class="pimg4">
+  </div>
+
+  <section class="section section-four">
+    <div id="strengthhead"></div>
+    <h2 class="calcheader">STRENGTH CALCULATION</h2>
+
+    <form id="strengthform">
+    Body Weight (kg):<input type="text" name="strengthweight"><br>
+    Bench (1), Squat (2), Deadlift (3):<input type="text" name="strengthoption"><br>
+    Max Lift Weight (kg: <input type="text" name="strengthliftweight"><br>
+    <input type="submit" value="Submit">
+    </form>
+    <!--form inputs-->
+
+    <p class="result" id="strengthoutput">STRENGTH RESULT: <span></span></p>
+    <!--span output here-->
+
+    <script>
+    const strength = function() {
+    const strengthForm = document.querySelector('#strengthform');
+    const strengthResult = document.querySelector("#strengthoutput")
+    //const defined for form & output location
+
+    strengthform.addEventListener("submit", (e) => {
+        e.preventDefault();
+        //prevent default form refresh behaviour
+
+        let WeightKG = strengthForm.querySelector('input[name="strengthweight"]').value;
+        let Option = strengthForm.querySelector('input[name="strengthoption"]').value;
+        let LiftWeightKG = strengthForm.querySelector('input[name="strengthliftweight"]').value;
+        //reading from form inputs
+
+        let strengthCalc = '';
+
+        if (LiftWeightKG < WeightKG) {
+          strengthCalc = "Beginner"
+        } else if (LiftWeightKG == WeightKG) {
+          strengthCalc = "Intermediate"
+        } else {
+          strengthCalc = "advanced"
+        }
+        //strength level determined based on input value
+
+        console.log(strengthCalc)
+
+
+        strengthoutput.querySelector("span").innerHTML = `${strengthCalc}`;
+        //output to span
+      });
+    }
+
+    strength();
+
+    </script>
+
+  </section>
+
+  <div class="pimg5">
+  </div>
+
+  <section class="section section-five">
+    <div id="pacehead"></div>
+    <h2 class="calcheader">PACE CALCULATION</h2>
+
+      <form id="paceform">
+      Distance (km):<input type="text" name="pacedistance"><br>
+      Time (seconds):<input type="text" name="paceseconds"><br>
+      <input type="submit" value="Submit">
+      </form>
+      <!--form input-->
+
+      <p class="result" id="paceoutput">PACE RESULT: <span></span></p>
+      <!--span output-->
+
+      <script>
+      const pace = function() {
+      const paceForm = document.querySelector('#paceform');
+      const paceResult = document.querySelector("#paceoutput")
+      //define const of form & output
+
+      paceform.addEventListener("submit", (e) => {
+          e.preventDefault();
+          //prevent default form refresh behaviour
+
+          let DistanceKM = paceForm.querySelector('input[name="pacedistance"]').value;
+          let TimeS = paceForm.querySelector('input[name="paceseconds"]').value;
+          //reading from form input
+
+        let timeM = (TimeS / 60);
+        //convert seconds to minutes
+
+        let calculatePace = (DistanceKM / timeM);
+        //pace calculation - simple
+
+        console.log(timeM)
+        console.log(calculatePace)
+
+        paceResult.querySelector("span").innerHTML = `${calculatePace}`;
+        //output to span
+
+        });
+      }
+
+      pace();
+      </script>
+
+  </section>
+
+  <div class="pimg6">
+  </div>
+
+  <section class="section section-six">
+    <div id="energyhead"></div>
+    <h2 class="calcheader">FOOD ENERGY CONVERSION</h2>
+
+    <form id="foodconvform">
+    Carbs (g):<input type="text" name="foodcarbs"><br>
+    Fats (g):<input type="text" name="foodfats"><br>
+    Protein (g):<input type="text" name="foodprotein"><br>
+    <input type="submit" value="Submit">
+    </form>
+    <!--form input-->
+
+    <p class="result" id="energyoutput">ENERGY RESULT: <span></span></p>
+    <!--span output-->
+
+    <script>
+    const energy = function() {
+    const energyForm = document.querySelector('#foodconvform');
+    const energyResult = document.querySelector("#energyoutput")
+    //define const of form & output
+
+    foodconvform.addEventListener("submit", (e) => {
+        e.preventDefault();
+        //prevent default form refresh behaviour
+
+        let CarbsG = energyForm.querySelector('input[name="foodcarbs"]').value;
+        let FatsG = energyForm.querySelector('input[name="foodfats"]').value;
+        let ProteinG = energyForm.querySelector('input[name="foodprotein"]').value;
+        //reading from form inputs
+
+      let totalCalories = ((CarbsG * 9) + (FatsG * 9) + (ProteinG * 4));
+      //calc via calories per gram of each
+
+      energyResult.querySelector("span").innerHTML = `${totalCalories}` + " calories";
+      //output to span
+
+      });
+    }
+
+    energy();
+    </script>
+
+  </section>
+
+
+</body>
+</html>
